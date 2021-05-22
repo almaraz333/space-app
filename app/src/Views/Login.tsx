@@ -16,11 +16,10 @@ export const Login: React.FC = () => {
       onSubmit={async (e) => {
         e.preventDefault();
         console.log("submitted");
-        console.log(email, password);
         const res = await login({ variables: { email, password } });
 
         if (res && res.data) {
-          setAccessToken(res.data.login.accessToken);
+          await setAccessToken(res.data.login.accessToken);
         }
 
         history.push("/");

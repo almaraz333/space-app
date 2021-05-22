@@ -1,9 +1,12 @@
 import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
+import { setAccessToken } from "./accessToken";
+import { useLogoutMutation } from "./generated/graphql";
 import { Bye } from "./Views/Bye";
 import { Home } from "./Views/Home";
 import { Login } from "./Views/Login";
 import { Register } from "./Views/Register";
 export const Routes = () => {
+  const [logout, { client }] = useLogoutMutation();
   return (
     <BrowserRouter>
       <div>
@@ -19,6 +22,17 @@ export const Routes = () => {
           </div>
           <div>
             <Link to="/bye">Bye</Link>
+          </div>
+          <div>
+            <button
+              onClick={async () => {
+                await logout();
+                setAccessToken("");
+                await client.resetStore();
+              }}
+            >
+              Logout
+            </button>
           </div>
         </header>
         <Switch>

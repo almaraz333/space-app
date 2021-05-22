@@ -13,7 +13,7 @@ export const Home: React.FC<Props> = () => {
     <div>
       <h1>Users: </h1>
       <ul>
-        {data?.users.map((user) => (
+        {data?.users.map((user: any) => (
           <li key={user.id}>
             {user.email}, {user.id}
           </li>

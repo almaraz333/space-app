@@ -15,7 +15,6 @@ export const Register: React.FC = () => {
       onSubmit={(e) => {
         e.preventDefault();
         console.log("submitted");
-        console.log(email, password);
         register({ variables: { email, password } });
         history.push("/");
       }}
