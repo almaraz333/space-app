@@ -4,13 +4,15 @@ import { useLogoutMutation } from "./generated/graphql";
 import { Bye } from "./Views/Bye";
 import { Home } from "./Views/Home";
 import { Login } from "./Views/Login";
+import { NasaPOTD } from "./Views/NasaPOTD";
+import { News } from "./Views/News";
 import { Register } from "./Views/Register";
 export const Routes = () => {
   const [logout, { client }] = useLogoutMutation();
   return (
-    <BrowserRouter>
-      <div>
-        <header>
+    <>
+      <div className="mt-5">
+        {/* <header>
           <div>
             <Link to="/">Home</Link>
           </div>
@@ -34,14 +36,16 @@ export const Routes = () => {
               Logout
             </button>
           </div>
-        </header>
+        </header> */}
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/bye" component={Bye} />
+          <Route exact path="/news" component={News} />
+          <Route exact path="/NASA-POTD" component={NasaPOTD} />
         </Switch>
       </div>
-    </BrowserRouter>
+    </>
   );
 };

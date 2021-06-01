@@ -1,3 +1,4 @@
+import { Logo } from "../Components/Logo";
 import { useUsersQuery } from "../generated/graphql";
 
 export type Props = {};
@@ -11,14 +12,10 @@ export const Home: React.FC<Props> = () => {
 
   return (
     <div>
-      <h1>Users: </h1>
-      <ul>
-        {data?.users.map((user: any) => (
-          <li key={user.id}>
-            {user.email}, {user.id}
-          </li>
-        ))}
-      </ul>
+      <div className="flex items-center flex-col">
+        <Logo height={"400"} width={"400"} />
+        <h1>Where do you want yo go?</h1>
+      </div>
     </div>
   );
 };

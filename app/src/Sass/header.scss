@@ -1,0 +1,17 @@
+.header{
+   span, a{
+       color: #ffffff;
+       text-decoration: none;
+   }
+   a:not(.log-button){
+       border-bottom: 2px solid transparent;
+   }
+
+   a:hover{
+       border-bottom: 2px solid #66c3ff;
+   }
+   .log-button{
+       text-decoration: none;
+   }
+
+}

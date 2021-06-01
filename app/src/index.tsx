@@ -5,7 +5,8 @@ import { ApolloLink, HttpLink, Observable } from "@apollo/react-hooks";
 import { App } from "./App";
 import { TokenRefreshLink } from "apollo-link-token-refresh";
 import jwtDecode from "jwt-decode";
-import { onError } from "apollo-link-error";
+
+import "./index.css";
 
 const cache = new InMemoryCache({});
 
