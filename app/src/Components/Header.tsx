@@ -38,12 +38,13 @@ export const Header: React.FC<Props> = () => {
           >
             NASA Picture of the Day
           </Link>
-          {/* <a
+          <Link
+            to="/near-earth-objects"
             href="#responsive-header"
-            className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white"
+            className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4 font-semibold"
           >
-            Blog
-          </a> */}
+            Near Earth Objects
+          </Link>
         </div>
         <div>
           <Link

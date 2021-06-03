@@ -21,8 +21,6 @@ export const NasaPOTD: React.FC = () => {
     fetchData();
   }, [apiUrl]);
 
-  console.log(data);
-
   return (
     <>
       {data && (

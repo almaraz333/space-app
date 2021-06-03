@@ -1,6 +1,6 @@
 import { formatDate } from "./formatDate";
 
-export const getNews = () => {
+export const getApiData = () => {
   const apiUrl = `https://newsapi.org/v2/everything?q=astronomy&from=${formatDate(
     new Date()
   )}&sortBy=publishedAt&apiKey=cf51166c285a415a801148b2f5b41d70`;
