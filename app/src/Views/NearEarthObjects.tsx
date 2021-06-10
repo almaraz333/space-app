@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Asteroid from "../Assets/asteroid.png";
 import Earth from "../Assets/earth.png";
+import Moon from "../Assets/moon.png";
 
 import "../Sass/nearEarthObjects.scss";
 
@@ -54,9 +55,16 @@ export const NearEarthObjects: React.FC = () => {
     fetchData();
   }, [apiUrl]);
 
-  console.log(data);
   return (
-    <div className="grid grid-cols-3 near-earth-object-container mt-40 h-full">
+    <div className="grid grid-cols-3 near-earth-object-container mt-24 h-full">
+      <img
+        src={Moon}
+        alt="moon"
+        height={70}
+        width={70}
+        className="ml-72 mb-10"
+        style={{ filter: "invert(1)" }}
+      />
       <img
         alt="earth"
         src={Earth}

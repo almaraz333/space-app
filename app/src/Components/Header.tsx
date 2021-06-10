@@ -6,14 +6,27 @@ import { useRecoilState } from "recoil";
 
 import { useLogoutMutation } from "../generated/graphql";
 
+import { setAccessToken } from "../accessToken";
+
 export type Props = {};
 
 export const Header: React.FC<Props> = () => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
 
-  const [logOut] = useLogoutMutation();
+  const [logOut, { client }] = useLogoutMutation();
 
   const history = useHistory();
+
+  const handleLogIn = () => {
+    history.push("/login");
+  };
+
+  const handleLogOut = async () => {
+    await logOut();
+    setAccessToken("");
+    await client.resetStore();
+    setIsLoggedIn(false);
+  };
 
   return (
     <nav className="header flex items-center justify-between flex-wrap p-6 bg-primary shadow-md">
@@ -37,42 +50,41 @@ export const Header: React.FC<Props> = () => {
           </svg>
         </button>
       </div>
-      {isLoggedIn && (
-        <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-          <div className="text-sm lg:flex-grow">
-            <Link
-              to="/news"
-              className="block mt-4 lg:inline-block lg:mt-0 mr-4 font-semibold"
-            >
-              News
-            </Link>
-            <Link
-              to="/NASA-POTD"
-              href="#responsive-header"
-              className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4 font-semibold"
-            >
-              NASA Picture of the Day
-            </Link>
-            <Link
-              to="/near-earth-objects"
-              href="#responsive-header"
-              className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4 font-semibold"
-            >
-              Near Earth Objects
-            </Link>
-          </div>
-          <button
-            className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white mt-4 lg:mt-0 log-button"
-            onClick={() => {
-              logOut();
-              setIsLoggedIn(false);
-              history.push("/login");
-            }}
+      <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+        <div className="text-sm lg:flex-grow">
+          <Link
+            to="/news"
+            className="block mt-4 lg:inline-block lg:mt-0 mr-4 font-semibold"
           >
-            Log Out
-          </button>
+            News
+          </Link>
+          <Link
+            to="/NASA-POTD"
+            href="#responsive-header"
+            className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4 font-semibold"
+          >
+            NASA Picture of the Day
+          </Link>
+          <Link
+            to="/near-earth-objects"
+            href="#responsive-header"
+            className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4 font-semibold"
+          >
+            Near Earth Objects
+          </Link>
         </div>
-      )}
+        <button
+          className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white mt-4 lg:mt-0 log-button"
+          onClick={() => {
+            if (isLoggedIn) {
+              handleLogOut();
+            }
+            handleLogIn();
+          }}
+        >
+          {isLoggedIn ? "Log Out" : "Log In"}
+        </button>
+      </div>
     </nav>
   );
 };

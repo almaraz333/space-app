@@ -1,5 +1,3 @@
-import Skeleton from "react-loading-skeleton";
-
 export type ArticleProps = {
   title: string;
   imgUrl: string;
