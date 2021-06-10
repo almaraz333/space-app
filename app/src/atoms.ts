@@ -5,7 +5,7 @@ export const accessTokenState = atom<string>({
   default: "",
 });
 
-export const newsState = atom({
-  key: "news",
-  default: undefined,
+export const isLoggedInState = atom({
+  key: "isLoggedIn",
+  default: false,
 });

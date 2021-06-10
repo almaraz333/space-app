@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter } from "react-router-dom";
 import { setAccessToken } from "./accessToken";
 import { Header } from "./Components/Header";
 import { Routes } from "./Routes";
@@ -25,12 +24,11 @@ export const App: React.FC<Props> = () => {
   if (loading) {
     return <h1>Loading...</h1>;
   }
+
   return (
-    <BrowserRouter>
-      <div className="app">
-        <Header />
-        <Routes />
-      </div>
-    </BrowserRouter>
+    <div className={`app`}>
+      <Header />
+      <Routes />
+    </div>
   );
 };

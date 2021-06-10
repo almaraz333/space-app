@@ -1,5 +1,6 @@
-import { Logo } from "../Components/Logo";
 import { useUsersQuery } from "../generated/graphql";
+import { Svg } from "../Assets/frame";
+import "../Sass/home.scss";
 
 export type Props = {};
 
@@ -13,8 +14,8 @@ export const Home: React.FC<Props> = () => {
   return (
     <div>
       <div className="flex items-center flex-col">
-        <Logo height={"400"} width={"400"} />
-        <h1>Where do you want yo go?</h1>
+        <Svg />
+        <h1 className="mt-10">Where do you want you go?</h1>
       </div>
     </div>
   );

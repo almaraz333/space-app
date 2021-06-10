@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Skeleton from "react-loading-skeleton";
 
 export type ArticleProps = {
   title: string;
@@ -18,27 +18,33 @@ export const Article: React.FC<ArticleProps> = ({
   sourceName,
 }) => {
   return (
-    <div className="article my-5 p-5 border-secondary border-2">
+    <div className="article my-5 p-5 border-primary border-2">
       <div className="article-header">
-        <img
-          className="image"
-          alt="article"
-          src={imgUrl}
-          height="50%"
-          width="50%"
-        />
+        {
+          <img
+            className="image"
+            alt="article"
+            src={imgUrl}
+            height="50%"
+            width="50%"
+          />
+        }
         <h2 className="title mt-3 text-grey">
-          <a href={url}>{title}</a>
+          <a href={url}>
+            <p>{title}</p>
+          </a>
         </h2>
       </div>
       <div className="content">
-        <div className="description">{description}</div>
-        <div className="flex">
+        <div className="description">
+          <p>{description}</p>
+        </div>
+        <div className="flex mt-5">
           <p className="font-bold">
             {Math.floor((Date.now() - Date.parse(publishedAt)) / 3600000)} hours
             ago
           </p>
-          <span className="mx-2">|</span>
+          <span className="mx-2 text-primary">|</span>
           <p>{sourceName}</p>
         </div>
       </div>

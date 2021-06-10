@@ -3,11 +3,11 @@
         font-size:clamp(20px,3vw,4.5vw);
     }
     .article{
+        padding-bottom: 3rem;
         height: 100%;
         width: 80vw;
         display: grid;
         grid-template-columns: repeat(2,1fr);
-        //grid-template-rows: 1fr;
         grid-template-areas: 
         "header content"
         ;
@@ -26,14 +26,26 @@
                 grid-area: title;
             }
         }
-    
         a{
             text-decoration: underline !important;
-            color: #000000;
+            color: #ffffff;
         }
     
     }
 }
+
+@media only screen and (max-width: 800px) {
+    .article {
+    display: flex !important;
+    flex-direction: column;
+    .content{
+        margin-top: 3rem;
+    }
+    .image{
+        margin: 0 auto;
+    }
+    }
+  }
 
 
 

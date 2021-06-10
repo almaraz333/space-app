@@ -3,6 +3,9 @@ import { useHistory } from "react-router-dom";
 import { setAccessToken } from "../accessToken";
 import { useLoginMutation } from "../generated/graphql";
 
+import { isLoggedInState } from "../atoms";
+import { useSetRecoilState } from "recoil";
+
 export const Login: React.FC = () => {
   const history = useHistory();
 
@@ -10,6 +13,8 @@ export const Login: React.FC = () => {
   const [password, setPassword] = useState("");
 
   const [login] = useLoginMutation();
+
+  const setIsLoggedIn = useSetRecoilState(isLoggedInState);
 
   return (
     <form
@@ -22,25 +27,58 @@ export const Login: React.FC = () => {
           await setAccessToken(res.data.login.accessToken);
         }
 
+        setIsLoggedIn(true);
         history.push("/");
       }}
     >
-      <div>
-        <input
-          value={email}
-          placeholder="email"
-          onChange={(e) => setEmail(e.target.value)}
-        ></input>
+      <div className="bg-grey mt-28 shadow-md rounded px-8 mx-60 pt-6 pb-8 mb-4 flex flex-col">
+        <div className="mb-4">
+          <label
+            className="block text-white text-sm font-bold mb-2"
+            htmlFor="Email"
+          >
+            Email
+          </label>
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+            id="Email"
+            type="text"
+            placeholder="Email"
+          />
+        </div>
+        <div className="mb-6">
+          <label
+            className="block text-white text-sm font-bold mb-2"
+            htmlFor="password"
+          >
+            Password
+          </label>
+          <input
+            className="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3"
+            id="password"
+            type="password"
+            placeholder="******************"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <p className="text-red text-xs italic">Please choose a password.</p>
+        </div>
+        <div className="flex items-center justify-between">
+          <button
+            className="bg-primary hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+            type="submit"
+          >
+            Sign In
+          </button>
+          {/* <a
+            className="inline-block align-baseline font-bold text-sm text-white"
+            href="#"
+          >
+            Forgot Password?
+          </a> */}
+        </div>
       </div>
-      <div>
-        <input
-          type="password"
-          value={password}
-          placeholder="password"
-          onChange={(e) => setPassword(e.target.value)}
-        ></input>
-      </div>
-      <button type="submit">Log in</button>
     </form>
   );
 };

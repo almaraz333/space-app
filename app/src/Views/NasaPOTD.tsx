@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 
 export type POTDResponseProps = {
   date: string;
@@ -26,8 +27,14 @@ export const NasaPOTD: React.FC = () => {
       {data && (
         <div className="flex justify-center flex-col items-center">
           <h2 className="text-grey py-10 text-3xl">{data.title}</h2>
-          <img className="px-10" alt={data.title} src={data.hdurl} />
-          <p className="py-3 px-5">{data.explanation}</p>
+
+          <img
+            className="mx-10 border border-white"
+            alt={data.title}
+            src={data.hdurl}
+          />
+
+          <h3 className="py-3 px-20">{data.explanation}</h3>
         </div>
       )}
     </>

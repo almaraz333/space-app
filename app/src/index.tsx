@@ -6,7 +6,10 @@ import { App } from "./App";
 import { TokenRefreshLink } from "apollo-link-token-refresh";
 import jwtDecode from "jwt-decode";
 
+import { BrowserRouter } from "react-router-dom";
+
 import "./index.css";
+import { RecoilRoot } from "recoil";
 
 const cache = new InMemoryCache({});
 
@@ -103,7 +106,11 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App />
+    <BrowserRouter>
+      <RecoilRoot>
+        <App />
+      </RecoilRoot>
+    </BrowserRouter>
   </ApolloProvider>,
   document.getElementById("root")
 );

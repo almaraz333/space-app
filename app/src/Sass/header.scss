@@ -1,4 +1,8 @@
 .header{
+    
+    .site-name{
+        border: none !important;
+    }
    span, a{
        color: #ffffff;
        text-decoration: none;
@@ -7,11 +11,8 @@
        border-bottom: 2px solid transparent;
    }
 
-   a:hover{
+   a:hover:not(.log-button){
        border-bottom: 2px solid #66c3ff;
-   }
-   .log-button{
-       text-decoration: none;
    }
 
 }

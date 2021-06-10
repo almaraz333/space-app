@@ -33,7 +33,7 @@ export const News: React.FC = () => {
 
   return (
     <div className="articles-container">
-      <h1 className="text-grey flex justify-center font-bold">
+      <h1 className="text-grey flex justify-center font-bold mt-10">
         The latest astronomy news from around the world!
       </h1>
       <div className="flex items-center flex-col mt-20">

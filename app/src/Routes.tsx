@@ -12,7 +12,7 @@ export const Routes = () => {
   const [logout, { client }] = useLogoutMutation();
   return (
     <>
-      <div className="mt-5">
+      <div className="">
         {/* <header>
           <div>
             <Link to="/">Home</Link>

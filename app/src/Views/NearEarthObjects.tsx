@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Asteroid from "../Assests/asteroid.png";
-import Earth from "../Assests/earth.png";
+import Asteroid from "../Assets/asteroid.png";
+import Earth from "../Assets/earth.png";
 
 import "../Sass/nearEarthObjects.scss";
 
@@ -56,35 +56,33 @@ export const NearEarthObjects: React.FC = () => {
 
   console.log(data);
   return (
-    <>
-      <div className="grid grid-cols-3 near-earth-object-container">
-        <img
-          alt="earth"
-          src={Earth}
-          height="75%"
-          width="75%"
-          className="col-start-1"
-        />
-        <div className="grid grid-flow-col-dense gap-x-4 px-72 items-center justify-start pr-0 pl-0 col-start-2 col-end-4">
-          {data &&
-            data.map((item, key) => (
-              <>
-                <ReactTooltip multiline={true} />
-                <img
-                  key={key}
-                  data-tip={createNearEarthTooltip(item)}
-                  alt="asteroid"
-                  src={Asteroid}
-                  height={2000 * Number(item.estimated_diameter)}
-                  width={2000 * Number(item.estimated_diameter)}
-                  style={{
-                    marginRight: 25 * Number(item.average_lunar_distance),
-                  }}
-                />
-              </>
-            ))}
-        </div>
+    <div className="grid grid-cols-3 near-earth-object-container mt-40 h-full">
+      <img
+        alt="earth"
+        src={Earth}
+        height="75%"
+        width="75%"
+        className="col-start-1"
+      />
+      <div className="grid grid-flow-col-dense gap-x-4 px-72 items-center justify-start pr-0 pl-0 col-start-2 col-end-4">
+        {data &&
+          data.map((item, key) => (
+            <a href={item.url_nasa_details}>
+              <ReactTooltip multiline={true} />
+              <img
+                key={key}
+                data-tip={createNearEarthTooltip(item)}
+                alt="asteroid"
+                src={Asteroid}
+                height={2000 * Number(item.estimated_diameter)}
+                width={2000 * Number(item.estimated_diameter)}
+                style={{
+                  marginRight: 25 * Number(item.average_lunar_distance),
+                }}
+              />
+            </a>
+          ))}
       </div>
-    </>
+    </div>
   );
 };
