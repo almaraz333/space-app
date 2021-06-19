@@ -1,3 +1,6 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
+
 export type ArticleProps = {
   title: string;
   imgUrl: string;
@@ -34,6 +37,11 @@ export const Article: React.FC<ArticleProps> = ({
         </h2>
       </div>
       <div className="content">
+        <div className="mb-5 flex justify-end">
+          <button>
+            <FontAwesomeIcon icon={faPlusSquare} color="white" size="lg" />
+          </button>
+        </div>
         <div className="description">
           <p>{description}</p>
         </div>

@@ -56,7 +56,10 @@ export const NearEarthObjects: React.FC = () => {
   }, [apiUrl]);
 
   return (
-    <div className="grid grid-cols-3 near-earth-object-container mt-24 h-full">
+    <div
+      className="grid grid-cols-3 near-earth-object-container pt-24 h-full pb-10"
+      style={{ zIndex: 5 }}
+    >
       <img
         src={Moon}
         alt="moon"

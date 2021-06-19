@@ -62,7 +62,7 @@ export const Login: React.FC = () => {
             placeholder="******************"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <p className="text-red text-xs italic">Please choose a password.</p>
+          <p className="text-red text-xs italic">Please enter a password.</p>
         </div>
         <div className="flex items-center justify-between">
           <button

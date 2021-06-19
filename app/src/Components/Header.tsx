@@ -29,7 +29,7 @@ export const Header: React.FC<Props> = () => {
   };
 
   return (
-    <nav className="header flex items-center justify-between flex-wrap p-6 bg-primary shadow-md">
+    <nav className="header flex items-center justify-between flex-wrap p-6 bg-primary shadow-md z-50">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
         <Link
           to="/"

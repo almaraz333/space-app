@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Article } from "../Components/Article";
-import { formatDate } from "../Functions/formatDate";
 
 import "../Sass/news.scss";
 

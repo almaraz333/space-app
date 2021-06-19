@@ -55,6 +55,8 @@ export type User = {
   __typename?: 'User';
   id: Scalars['Int'];
   email: Scalars['String'];
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
 };
 
 export type LoginMutationVariables = Exact<{
@@ -113,7 +115,7 @@ export type UsersQuery = (
   { __typename?: 'Query' }
   & { users: Array<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'email'>
+    & Pick<User, 'id' | 'email' | 'firstName' | 'lastName'>
   )> }
 );
 
@@ -283,6 +285,8 @@ export const UsersDocument = gql`
   users {
     id
     email
+    firstName
+    lastName
   }
 }
     `;
