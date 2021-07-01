@@ -14,15 +14,29 @@ export type Scalars = {
   Float: number;
 };
 
+export type FavoriteArticle = {
+  __typename?: 'FavoriteArticle';
+  id: Scalars['Int'];
+  title: Scalars['String'];
+  publisher: Scalars['String'];
+  url: Scalars['String'];
+  userId: Scalars['Float'];
+  imageUrl: Scalars['String'];
+  description: Scalars['String'];
+  sourceName: Scalars['String'];
+};
+
 export type LoginResponse = {
   __typename?: 'LoginResponse';
   accessToken: Scalars['String'];
+  userId: Scalars['Float'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
   logout: Scalars['Boolean'];
   register: Scalars['Boolean'];
+  addArticle: Scalars['Boolean'];
   login: LoginResponse;
   revokeUsersRefreshTokens: Scalars['Boolean'];
 };
@@ -31,6 +45,17 @@ export type Mutation = {
 export type MutationRegisterArgs = {
   password: Scalars['String'];
   email: Scalars['String'];
+};
+
+
+export type MutationAddArticleArgs = {
+  sourceName: Scalars['String'];
+  description: Scalars['String'];
+  imageUrl: Scalars['String'];
+  userId: Scalars['Int'];
+  publisher: Scalars['String'];
+  title: Scalars['String'];
+  url: Scalars['String'];
 };
 
 
@@ -46,9 +71,19 @@ export type MutationRevokeUsersRefreshTokensArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  hello: Scalars['String'];
-  bye: Scalars['String'];
-  users: Array<User>;
+  userId: Scalars['String'];
+  user: User;
+  favoriteArticles: Array<FavoriteArticle>;
+};
+
+
+export type QueryUserArgs = {
+  userId: Scalars['Int'];
+};
+
+
+export type QueryFavoriteArticlesArgs = {
+  userId: Scalars['Int'];
 };
 
 export type User = {
@@ -58,6 +93,22 @@ export type User = {
   firstName: Scalars['String'];
   lastName: Scalars['String'];
 };
+
+export type AddArticleMutationVariables = Exact<{
+  userId: Scalars['Int'];
+  title: Scalars['String'];
+  publisher: Scalars['String'];
+  url: Scalars['String'];
+  imageUrl: Scalars['String'];
+  description: Scalars['String'];
+  sourceName: Scalars['String'];
+}>;
+
+
+export type AddArticleMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'addArticle'>
+);
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
@@ -69,7 +120,7 @@ export type LoginMutation = (
   { __typename?: 'Mutation' }
   & { login: (
     { __typename?: 'LoginResponse' }
-    & Pick<LoginResponse, 'accessToken'>
+    & Pick<LoginResponse, 'accessToken' | 'userId'>
   ) }
 );
 
@@ -92,38 +143,78 @@ export type RegisterMutation = (
   & Pick<Mutation, 'register'>
 );
 
-export type ByeQueryVariables = Exact<{ [key: string]: never; }>;
+export type FavoriteArticlesQueryVariables = Exact<{
+  userId: Scalars['Int'];
+}>;
 
 
-export type ByeQuery = (
+export type FavoriteArticlesQuery = (
   { __typename?: 'Query' }
-  & Pick<Query, 'bye'>
-);
-
-export type HelloQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type HelloQuery = (
-  { __typename?: 'Query' }
-  & Pick<Query, 'hello'>
-);
-
-export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type UsersQuery = (
-  { __typename?: 'Query' }
-  & { users: Array<(
-    { __typename?: 'User' }
-    & Pick<User, 'id' | 'email' | 'firstName' | 'lastName'>
+  & { favoriteArticles: Array<(
+    { __typename?: 'FavoriteArticle' }
+    & Pick<FavoriteArticle, 'url' | 'publisher' | 'title' | 'imageUrl' | 'description' | 'sourceName'>
   )> }
 );
 
+export type UserIdQueryVariables = Exact<{ [key: string]: never; }>;
 
+
+export type UserIdQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'userId'>
+);
+
+
+export const AddArticleDocument = gql`
+    mutation AddArticle($userId: Int!, $title: String!, $publisher: String!, $url: String!, $imageUrl: String!, $description: String!, $sourceName: String!) {
+  addArticle(
+    userId: $userId
+    title: $title
+    publisher: $publisher
+    url: $url
+    imageUrl: $imageUrl
+    description: $description
+    sourceName: $sourceName
+  )
+}
+    `;
+export type AddArticleMutationFn = Apollo.MutationFunction<AddArticleMutation, AddArticleMutationVariables>;
+
+/**
+ * __useAddArticleMutation__
+ *
+ * To run a mutation, you first call `useAddArticleMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddArticleMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addArticleMutation, { data, loading, error }] = useAddArticleMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      title: // value for 'title'
+ *      publisher: // value for 'publisher'
+ *      url: // value for 'url'
+ *      imageUrl: // value for 'imageUrl'
+ *      description: // value for 'description'
+ *      sourceName: // value for 'sourceName'
+ *   },
+ * });
+ */
+export function useAddArticleMutation(baseOptions?: Apollo.MutationHookOptions<AddArticleMutation, AddArticleMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddArticleMutation, AddArticleMutationVariables>(AddArticleDocument, options);
+      }
+export type AddArticleMutationHookResult = ReturnType<typeof useAddArticleMutation>;
+export type AddArticleMutationResult = Apollo.MutationResult<AddArticleMutation>;
+export type AddArticleMutationOptions = Apollo.BaseMutationOptions<AddArticleMutation, AddArticleMutationVariables>;
 export const LoginDocument = gql`
     mutation Login($email: String!, $password: String!) {
   login(email: $email, password: $password) {
     accessToken
+    userId
   }
 }
     `;
@@ -216,104 +307,75 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
-export const ByeDocument = gql`
-    query Bye {
-  bye
-}
-    `;
-
-/**
- * __useByeQuery__
- *
- * To run a query within a React component, call `useByeQuery` and pass it any options that fit your needs.
- * When your component renders, `useByeQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useByeQuery({
- *   variables: {
- *   },
- * });
- */
-export function useByeQuery(baseOptions?: Apollo.QueryHookOptions<ByeQuery, ByeQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ByeQuery, ByeQueryVariables>(ByeDocument, options);
-      }
-export function useByeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ByeQuery, ByeQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ByeQuery, ByeQueryVariables>(ByeDocument, options);
-        }
-export type ByeQueryHookResult = ReturnType<typeof useByeQuery>;
-export type ByeLazyQueryHookResult = ReturnType<typeof useByeLazyQuery>;
-export type ByeQueryResult = Apollo.QueryResult<ByeQuery, ByeQueryVariables>;
-export const HelloDocument = gql`
-    query Hello {
-  hello
-}
-    `;
-
-/**
- * __useHelloQuery__
- *
- * To run a query within a React component, call `useHelloQuery` and pass it any options that fit your needs.
- * When your component renders, `useHelloQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useHelloQuery({
- *   variables: {
- *   },
- * });
- */
-export function useHelloQuery(baseOptions?: Apollo.QueryHookOptions<HelloQuery, HelloQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<HelloQuery, HelloQueryVariables>(HelloDocument, options);
-      }
-export function useHelloLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<HelloQuery, HelloQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<HelloQuery, HelloQueryVariables>(HelloDocument, options);
-        }
-export type HelloQueryHookResult = ReturnType<typeof useHelloQuery>;
-export type HelloLazyQueryHookResult = ReturnType<typeof useHelloLazyQuery>;
-export type HelloQueryResult = Apollo.QueryResult<HelloQuery, HelloQueryVariables>;
-export const UsersDocument = gql`
-    query Users {
-  users {
-    id
-    email
-    firstName
-    lastName
+export const FavoriteArticlesDocument = gql`
+    query FavoriteArticles($userId: Int!) {
+  favoriteArticles(userId: $userId) {
+    url
+    publisher
+    title
+    imageUrl
+    description
+    sourceName
   }
 }
     `;
 
 /**
- * __useUsersQuery__
+ * __useFavoriteArticlesQuery__
  *
- * To run a query within a React component, call `useUsersQuery` and pass it any options that fit your needs.
- * When your component renders, `useUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useFavoriteArticlesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFavoriteArticlesQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useUsersQuery({
+ * const { data, loading, error } = useFavoriteArticlesQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useFavoriteArticlesQuery(baseOptions: Apollo.QueryHookOptions<FavoriteArticlesQuery, FavoriteArticlesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FavoriteArticlesQuery, FavoriteArticlesQueryVariables>(FavoriteArticlesDocument, options);
+      }
+export function useFavoriteArticlesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FavoriteArticlesQuery, FavoriteArticlesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FavoriteArticlesQuery, FavoriteArticlesQueryVariables>(FavoriteArticlesDocument, options);
+        }
+export type FavoriteArticlesQueryHookResult = ReturnType<typeof useFavoriteArticlesQuery>;
+export type FavoriteArticlesLazyQueryHookResult = ReturnType<typeof useFavoriteArticlesLazyQuery>;
+export type FavoriteArticlesQueryResult = Apollo.QueryResult<FavoriteArticlesQuery, FavoriteArticlesQueryVariables>;
+export const UserIdDocument = gql`
+    query UserId {
+  userId
+}
+    `;
+
+/**
+ * __useUserIdQuery__
+ *
+ * To run a query within a React component, call `useUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserIdQuery({
  *   variables: {
  *   },
  * });
  */
-export function useUsersQuery(baseOptions?: Apollo.QueryHookOptions<UsersQuery, UsersQueryVariables>) {
+export function useUserIdQuery(baseOptions?: Apollo.QueryHookOptions<UserIdQuery, UserIdQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<UsersQuery, UsersQueryVariables>(UsersDocument, options);
+        return Apollo.useQuery<UserIdQuery, UserIdQueryVariables>(UserIdDocument, options);
       }
-export function useUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UsersQuery, UsersQueryVariables>) {
+export function useUserIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserIdQuery, UserIdQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<UsersQuery, UsersQueryVariables>(UsersDocument, options);
+          return Apollo.useLazyQuery<UserIdQuery, UserIdQueryVariables>(UserIdDocument, options);
         }
-export type UsersQueryHookResult = ReturnType<typeof useUsersQuery>;
-export type UsersLazyQueryHookResult = ReturnType<typeof useUsersLazyQuery>;
-export type UsersQueryResult = Apollo.QueryResult<UsersQuery, UsersQueryVariables>;
+export type UserIdQueryHookResult = ReturnType<typeof useUserIdQuery>;
+export type UserIdLazyQueryHookResult = ReturnType<typeof useUserIdLazyQuery>;
+export type UserIdQueryResult = Apollo.QueryResult<UserIdQuery, UserIdQueryVariables>;

@@ -57,7 +57,7 @@ export const NearEarthObjects: React.FC = () => {
 
   return (
     <div
-      className="grid grid-cols-3 near-earth-object-container pt-24 h-full pb-10"
+      className="grid grid-cols-3 near-earth-object-container pt-24 h-full pb-60"
       style={{ zIndex: 5 }}
     >
       <img

@@ -1,0 +1,10 @@
+query FavoriteArticles($userId: Int!) {
+  favoriteArticles(userId: $userId) {
+    url
+    publisher
+    title
+    imageUrl
+    description
+    sourceName
+  }
+}

@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { setAccessToken } from "../accessToken";
 import { useLoginMutation } from "../generated/graphql";
 
-import { isLoggedInState } from "../atoms";
+import { isLoggedInState, userIdState } from "../atoms";
 import { useSetRecoilState } from "recoil";
 
 export const Login: React.FC = () => {
@@ -12,26 +12,27 @@ export const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [login] = useLoginMutation();
+  const [login, { data, error }] = useLoginMutation();
 
   const setIsLoggedIn = useSetRecoilState(isLoggedInState);
+  const setUserId = useSetRecoilState(userIdState);
 
   return (
     <form
       onSubmit={async (e) => {
         e.preventDefault();
-        console.log("submitted");
         const res = await login({ variables: { email, password } });
 
         if (res && res.data) {
-          await setAccessToken(res.data.login.accessToken);
+          setAccessToken(res.data.login.accessToken);
+          setIsLoggedIn(true);
+          setUserId(res.data.login.userId);
+          history.push("/");
         }
-
-        setIsLoggedIn(true);
-        history.push("/");
       }}
     >
       <div className="bg-grey mt-28 shadow-md rounded px-8 mx-60 pt-6 pb-8 mb-4 flex flex-col">
+        {error && <h1>Fuck no man</h1>}
         <div className="mb-4">
           <label
             className="block text-white text-sm font-bold mb-2"

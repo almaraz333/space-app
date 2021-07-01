@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { Article } from "../Components/Article";
 
+import { userIdState } from "../atoms";
+import { useRecoilValue } from "recoil";
+
+import { useFavoriteArticlesQuery } from "../generated/graphql";
+
 import "../Sass/news.scss";
 
 export type ArticleProps = {
@@ -18,6 +23,10 @@ type Res = {
 };
 
 export const News: React.FC = () => {
+  const userId = useRecoilValue(userIdState);
+  const { data: favoriteArticlesData } = useFavoriteArticlesQuery({
+    variables: { userId: userId ?? 0 },
+  });
   const [data, setData] = useState<Res>();
   const apiUrl = `https://newsapi.org/v2/everything?q=astronomy+space&sortBy=publishedAt&apiKey=cf51166c285a415a801148b2f5b41d70`;
 
@@ -30,6 +39,10 @@ export const News: React.FC = () => {
     fetchData();
   }, [apiUrl]);
 
+  const favoriteArticlesUrls = favoriteArticlesData?.favoriteArticles.map(
+    (article) => article.url
+  );
+
   return (
     <div className="articles-container">
       <h1 className="text-grey flex justify-center font-bold mt-10">
@@ -41,11 +54,12 @@ export const News: React.FC = () => {
             <Article
               key={key}
               title={item.title}
-              imgUrl={item.urlToImage}
+              imageUrl={item.urlToImage}
               description={item.description}
               publishedAt={item.publishedAt}
               url={item.url}
               sourceName={item.source.name}
+              favoriteArticlesUrls={favoriteArticlesUrls ?? []}
             />
           ))}
       </div>

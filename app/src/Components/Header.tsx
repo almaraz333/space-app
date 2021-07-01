@@ -33,9 +33,9 @@ export const Header: React.FC<Props> = () => {
       <div className="flex items-center flex-shrink-0 text-white mr-6">
         <Link
           to="/"
-          className="font-bold text-xl tracking-tight mr-5 site-name"
+          className="font-bold text-3xl tracking-tight mr-5 site-name"
         >
-          NAME NAME ???
+          Space
         </Link>
       </div>
       <div className="block lg:hidden">
@@ -73,8 +73,13 @@ export const Header: React.FC<Props> = () => {
             Near Earth Objects
           </Link>
         </div>
+        {isLoggedIn && (
+          <Link to="/account" className="mr-5">
+            Account
+          </Link>
+        )}
         <button
-          className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white mt-4 lg:mt-0 log-button"
+          className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white mt-4 lg:mt-0 log-button ml-auto"
           onClick={() => {
             if (isLoggedIn) {
               handleLogOut();
