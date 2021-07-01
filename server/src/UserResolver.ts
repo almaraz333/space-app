@@ -17,28 +17,33 @@ import { authMiddleware } from "./authMiddleware";
 import { sendRefreshToken } from "./sendRefreshToken";
 import { getConnection } from "typeorm";
 
+import { AuthenticationError } from "apollo-server-express";
+import { FavoriteArticle } from "./entity/FavoriteArticle";
+
 @ObjectType()
 class LoginResponse {
   @Field()
   accessToken: string;
+  @Field()
+  userId: number;
 }
 
 @Resolver()
 export class UserResolver {
   @Query(() => String)
-  hello() {
-    return "yeet";
-  }
-
-  @Query(() => String)
   @UseMiddleware(authMiddleware)
-  bye(@Ctx() { payload }: Context) {
-    return `your user ID is ${payload.userId}`;
+  userId(@Ctx() { payload }: Context) {
+    payload.userId;
   }
 
-  @Query(() => [User])
-  users() {
-    return User.find();
+  @Query(() => User)
+  user(@Arg("userId", () => Int) userId: number) {
+    return User.find({ where: { userId } });
+  }
+
+  @Query(() => [FavoriteArticle])
+  favoriteArticles(@Arg("userId", () => Int) userId: number) {
+    return FavoriteArticle.find({ where: { userId } });
   }
 
   @Mutation(() => Boolean)
@@ -66,22 +71,49 @@ export class UserResolver {
     return true;
   }
 
+  @Mutation(() => Boolean)
+  async addArticle(
+    @Arg("url", () => String) url: string,
+    @Arg("title", () => String) title: string,
+    @Arg("publisher", () => String) publisher: string,
+    @Arg("userId", () => Int) userId: number,
+    @Arg("imageUrl", () => String) imageUrl: string,
+    @Arg("description", () => String) description: string,
+    @Arg("sourceName", () => String) sourceName: string
+  ) {
+    try {
+      await FavoriteArticle.insert({
+        url,
+        title,
+        publisher,
+        userId,
+        imageUrl,
+        description,
+        sourceName,
+      });
+      return true;
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+  }
+
   @Mutation(() => LoginResponse)
   async login(
     @Arg("email") email: string,
     @Arg("password") password: string,
     @Ctx() { res }: Context
-  ): Promise<LoginResponse> {
+  ): Promise<LoginResponse | Error> {
     const user = await User.findOne({ where: { email } });
 
     if (!user) {
-      throw new Error("Invalid Login");
+      return new AuthenticationError("Invalid Login");
     }
 
     const valid = await compare(password, user.password);
 
     if (!valid) {
-      throw new Error("Invalid Login");
+      return new AuthenticationError("Invalid Login");
     }
 
     //login successfully
@@ -90,6 +122,7 @@ export class UserResolver {
 
     return {
       accessToken: createAccessToken(user),
+      userId: user.id,
     };
   }
 
