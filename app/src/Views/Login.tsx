@@ -31,7 +31,7 @@ export const Login: React.FC = () => {
         }
       }}
     >
-      <div className="bg-grey mt-28 shadow-md rounded px-8 mx-60 pt-6 pb-8 mb-4 flex flex-col">
+      <div className="bg-grey mt-28 shadow-md rounded px-8 mx-10 pt-6 pb-8 mb-4 flex flex-col login-form">
         {error && <h1>Fuck no man</h1>}
         <div className="mb-4">
           <label

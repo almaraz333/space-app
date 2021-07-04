@@ -38,12 +38,6 @@ export const AccountInfo: React.FC<AccountInfoProps> = () => {
             <p className="text-red text-xs italic">Please enter a password.</p>
           </div>
           <div className="flex items-center justify-between">
-            <button
-              className="bg-primary hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
-              type="submit"
-            >
-              Sign In
-            </button>
             {/* <a
                   className="inline-block align-baseline font-bold text-sm text-white"
                   href="#"

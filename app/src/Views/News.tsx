@@ -6,7 +6,7 @@ import { useRecoilValue } from "recoil";
 
 import { useFavoriteArticlesQuery } from "../generated/graphql";
 
-import "../Sass/news.scss";
+import "../Sass/articles.scss";
 
 export type ArticleProps = {
   author: string;
@@ -24,6 +24,7 @@ type Res = {
 
 export const News: React.FC = () => {
   const userId = useRecoilValue(userIdState);
+  console.log(userId);
   const { data: favoriteArticlesData } = useFavoriteArticlesQuery({
     variables: { userId: userId ?? 0 },
   });
@@ -48,7 +49,7 @@ export const News: React.FC = () => {
       <h1 className="text-grey flex justify-center font-bold mt-10">
         The latest astronomy news from around the world!
       </h1>
-      <div className="flex items-center flex-col mt-20">
+      <div className="flex article-container items-center flex-col mt-20">
         {data &&
           data.articles.map((item, key) => (
             <Article

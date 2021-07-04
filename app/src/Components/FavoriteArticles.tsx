@@ -4,6 +4,8 @@ import { Article } from "./Article";
 import { userIdState } from "../atoms";
 import { useRecoilValue } from "recoil";
 
+import "../Sass/articles.scss";
+
 export type FavoriteArticlesProps = {};
 
 export const FavoriteArticles: React.FC<FavoriteArticlesProps> = () => {
@@ -12,11 +14,8 @@ export const FavoriteArticles: React.FC<FavoriteArticlesProps> = () => {
     variables: { userId: userId ?? 0 },
   });
 
-  const favoriteArticlesUrls = articlesData?.favoriteArticles.map(
-    (article) => article.url
-  );
   return (
-    <>
+    <div className="articles-container">
       {articlesData ? (
         articlesData?.favoriteArticles.map((article) => (
           <Article
@@ -31,6 +30,6 @@ export const FavoriteArticles: React.FC<FavoriteArticlesProps> = () => {
       ) : (
         <h1>Something went wrong please log in</h1>
       )}
-    </>
+    </div>
   );
 };

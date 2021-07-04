@@ -76,30 +76,30 @@ export const Article: React.FC<ArticleProps> = ({
           </a>
         </h2>
       </div>
+      <div className="flex justify-end button  ">
+        {!location.pathname.includes("account") && (
+          <button
+            onClick={() => {
+              handleArticleAdd(
+                url,
+                sourceName,
+                title,
+                userId ?? 0,
+                imageUrl,
+                description,
+                sourceName
+              );
+            }}
+          >
+            {favoriteArticlesUrls.includes(url) ? (
+              <FontAwesomeIcon icon={faCheckSquare} color="white" size="lg" />
+            ) : (
+              <FontAwesomeIcon icon={faPlusSquare} color="white" size="lg" />
+            )}
+          </button>
+        )}
+      </div>
       <div className="content">
-        <div className="mb-5 flex justify-end">
-          {!location.pathname.includes("account") && (
-            <button
-              onClick={() => {
-                handleArticleAdd(
-                  url,
-                  sourceName,
-                  title,
-                  userId ?? 0,
-                  imageUrl,
-                  description,
-                  sourceName
-                );
-              }}
-            >
-              {favoriteArticlesUrls.includes(url) ? (
-                <FontAwesomeIcon icon={faCheckSquare} color="white" size="lg" />
-              ) : (
-                <FontAwesomeIcon icon={faPlusSquare} color="white" size="lg" />
-              )}
-            </button>
-          )}
-        </div>
         <div className="description">
           <p>{description}</p>
         </div>

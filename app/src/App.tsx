@@ -28,7 +28,10 @@ export const App: React.FC<Props> = () => {
   return (
     <div className={`app`}>
       <Header />
-      <Routes />
+      <div className="pt-16">
+        {" "}
+        <Routes />
+      </div>
     </div>
   );
 };

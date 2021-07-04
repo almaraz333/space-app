@@ -14,3 +14,8 @@ export const userIdState = atom<number | null>({
   key: "userId",
   default: null,
 });
+
+export const navOpenState = atom<boolean>({
+  key: "navOpen",
+  default: false,
+});
