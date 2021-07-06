@@ -75,7 +75,7 @@ export const NearEarthObjects: React.FC = () => {
         width="75%"
         className="col-start-1"
       />
-      <div className="grid grid-flow-col-dense gap-x-4 px-72 items-center justify-start pr-0 pl-0 col-start-2 col-end-4">
+      <div className="grid grid-flow-col-dense gap-x-4 px-72 items-center justify-start pr-0 pl-0 col-start-2 col-end-4 objects">
         {data &&
           data.map((item, key) => (
             <a href={item.url_nasa_details}>

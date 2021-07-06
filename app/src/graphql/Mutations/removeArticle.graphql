@@ -1,0 +1,3 @@
+mutation RemoveArticle($url: String!) {
+  removeArticle(url: $url)
+}

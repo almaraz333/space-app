@@ -14,10 +14,14 @@ export const FavoriteArticles: React.FC<FavoriteArticlesProps> = () => {
     variables: { userId: userId ?? 0 },
   });
 
+  const removeArticleFromArray = (key: number) => {
+    articlesData?.favoriteArticles.splice(key, 1);
+  };
+
   return (
     <div className="articles-container">
       {articlesData ? (
-        articlesData?.favoriteArticles.map((article) => (
+        articlesData?.favoriteArticles.map((article, key) => (
           <Article
             title={article.title}
             publishedAt={article.publisher}
@@ -25,6 +29,8 @@ export const FavoriteArticles: React.FC<FavoriteArticlesProps> = () => {
             imageUrl={article.imageUrl}
             description={article.description}
             sourceName={article.sourceName}
+            removeArticleFromArray={removeArticleFromArray}
+            key={key}
           />
         ))
       ) : (
