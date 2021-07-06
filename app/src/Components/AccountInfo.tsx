@@ -13,7 +13,7 @@ export const AccountInfo: React.FC<AccountInfoProps> = () => {
   return (
     <>
       <form>
-        <div className="bg-grey shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
+        <div className="bg-grey shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col mx-5">
           <div className="mb-4">
             <label
               className="block text-white text-sm font-bold mb-2"
