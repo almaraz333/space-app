@@ -1,15 +1,9 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useState } from "react";
 import { AccountInfo } from "../Components/AccountInfo";
 import { FavoriteArticles } from "../Components/FavoriteArticles";
 
 export const Account = () => {
-  const { pathname } = useLocation();
   const [component, setComponent] = useState<string>("account_info");
-
-  useEffect(() => {
-    console.log(component);
-  }, [component]);
 
   const determineComponent = () => {
     switch (component) {
@@ -22,12 +16,6 @@ export const Account = () => {
 
   return (
     <div className="flex">
-      {/* <div>
-        Favorite Articles
-        {articlesData?.favoriteArticles.map((article) => (
-          <h1>{article.title}</h1>
-        ))}
-      </div> */}
       <div className="ml-10 mt-10 w-36">
         <ul className="flex flex-col">
           <li

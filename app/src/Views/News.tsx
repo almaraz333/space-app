@@ -60,7 +60,6 @@ export const News: React.FC = () => {
               publishedAt={item.publishedAt}
               url={item.url}
               sourceName={item.source.name}
-              favoriteArticlesUrls={favoriteArticlesUrls ?? []}
             />
           ))}
       </div>

@@ -4,8 +4,9 @@
     }
     .article{
         padding-bottom: 3rem;
+        margin: 5% auto;
         height: 100%;
-        width: 80vw;
+        width: 50vw;
         display: grid;
         grid-template-rows: 50px 1fr 10rem;
         // grid-template-columns: 1fr 50px;    

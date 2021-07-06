@@ -1,11 +1,19 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusSquare, faCheckSquare } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlusSquare,
+  faCheckSquare,
+  faMinusSquare,
+} from "@fortawesome/free-solid-svg-icons";
 
-import { useAddArticleMutation } from "../generated/graphql";
+import {
+  useAddArticleMutation,
+  useRemoveArticleMutation,
+} from "../generated/graphql";
 
 import { isLoggedInState, userIdState } from "../atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { useHistory } from "react-router-dom";
+import { useState } from "react";
 
 export type ArticleProps = {
   title: string;
@@ -14,7 +22,8 @@ export type ArticleProps = {
   publishedAt: string;
   url: string;
   sourceName: string;
-  favoriteArticlesUrls?: string[];
+  removeArticleFromArray?: (key: number) => void;
+  key: number;
 };
 
 export const Article: React.FC<ArticleProps> = ({
@@ -24,13 +33,19 @@ export const Article: React.FC<ArticleProps> = ({
   publishedAt,
   url,
   sourceName,
-  favoriteArticlesUrls = [],
+  removeArticleFromArray,
+  key,
 }) => {
   const [addArticle] = useAddArticleMutation();
+  const [removeArticle] = useRemoveArticleMutation();
   const isLoggedIn = useRecoilState(isLoggedInState);
   const userId = useRecoilValue(userIdState);
 
+  const [added, setAdded] = useState(false);
+
   const { location } = useHistory();
+
+  const isAccountView = location.pathname.includes("account");
 
   const handleArticleAdd = (
     url: string,
@@ -58,6 +73,19 @@ export const Article: React.FC<ArticleProps> = ({
     }
   };
 
+  const handleRemoveArticle = (url: string) => {
+    if (isLoggedIn) {
+      removeArticle({
+        variables: {
+          url,
+        },
+      });
+      removeArticleFromArray && removeArticleFromArray(key);
+    } else {
+      alert("Must be logged in to add article to favorites");
+    }
+  };
+
   return (
     <div className="article my-5 p-5 border-primary border-2">
       <div className="article-header">
@@ -77,7 +105,7 @@ export const Article: React.FC<ArticleProps> = ({
         </h2>
       </div>
       <div className="flex justify-end button  ">
-        {!location.pathname.includes("account") && (
+        {!isAccountView ? (
           <button
             onClick={() => {
               handleArticleAdd(
@@ -89,13 +117,22 @@ export const Article: React.FC<ArticleProps> = ({
                 description,
                 sourceName
               );
+              setAdded(true);
             }}
           >
-            {favoriteArticlesUrls.includes(url) ? (
+            {added ? (
               <FontAwesomeIcon icon={faCheckSquare} color="white" size="lg" />
             ) : (
               <FontAwesomeIcon icon={faPlusSquare} color="white" size="lg" />
             )}
+          </button>
+        ) : (
+          <button
+            onClick={() => {
+              handleRemoveArticle(url);
+            }}
+          >
+            <FontAwesomeIcon icon={faMinusSquare} color="white" size="lg" />
           </button>
         )}
       </div>
