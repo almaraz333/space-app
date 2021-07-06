@@ -98,6 +98,19 @@ export class UserResolver {
     }
   }
 
+  @Mutation(() => Boolean)
+  async removeArticle(@Arg("url", () => String) url: string) {
+    try {
+      await FavoriteArticle.delete({
+        url,
+      });
+      return true;
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+  }
+
   @Mutation(() => LoginResponse)
   async login(
     @Arg("email") email: string,
