@@ -1,16 +1,13 @@
 import { useState } from "react";
 import { AccountInfo } from "../Components/AccountInfo";
-import { FavoriteArticles } from "../Components/FavoriteArticles";
 
-export const Account = () => {
+const Account = () => {
   const [component, setComponent] = useState<string>("account_info");
 
   const determineComponent = () => {
     switch (component) {
       case "account_info":
         return <AccountInfo />;
-      case "favorite_articles":
-        return <FavoriteArticles />;
     }
   };
 
@@ -48,3 +45,5 @@ export const Account = () => {
     </div>
   );
 };
+
+export default Account;
